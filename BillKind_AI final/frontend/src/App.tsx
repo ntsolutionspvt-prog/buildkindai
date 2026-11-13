@@ -352,9 +352,14 @@ export interface DonationRecord {
   status: 'completed' | 'refunded';
 }
 
-const BACKEND_URL = typeof window !== 'undefined' && window.location.hostname
-  ? `${window.location.protocol}//${window.location.hostname}:8000`
-  : 'http://localhost:8000';
+
+const BACKEND_URL = (
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV
+    ? 'http://localhost:8000'
+    : 'https://buildkindai.onrender.com')
+).replace(/\/+$/, '');
+
 
 // Initial Sample Bills with diverse international currencies & locations
 const INITIAL_BILLS: BillRequest[] = [
